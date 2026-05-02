@@ -9,22 +9,33 @@ export interface User {
 export interface Order{
     id: String,
     userId: String,
-    side: String,
-    type: String,
-    stockId: String,
+    symbol: String,
+    side: Side,
     price: Number,
     qty: Number,
     filledQty: Number,
-    status: String
+    status: "OPEN"| "FILLED" |"CANCELLED"
+    createdAt: number;
+
 }
 
 export interface Stock {
-    id: String,
+    id: Number,
     title: String,
     symbol: String
 }
 
-export interface Order {
+export interface Fills {
     id: String,
+    stockId: Number,
+    price: Number,
+    qty: Number,
+    buyOrderId: String,
+    sellOrderId: String,
+    timestamp: Number
+}
+
+export interface 
+export interface userBalance {
     
 }
