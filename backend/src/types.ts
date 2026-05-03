@@ -25,7 +25,7 @@ export interface Stock {
     symbol: String
 }
 
-export interface Fills {
+export interface Fill {
     id: String,
     stockId: Number,
     price: Number,
@@ -35,7 +35,10 @@ export interface Fills {
     timestamp: Number
 }
 
-export interface 
-export interface userBalance {
-    
+export interface BalanceEntry{
+    available: number,
+    locked: number;
+}
+export interface UserBalance {
+    [asset: string]: BalanceEntry;
 }
