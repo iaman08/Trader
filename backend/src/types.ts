@@ -1,4 +1,4 @@
-export type Side = "BUY" || "SELL";
+export type Side = "BUY" | "SELL";
 
 export interface User {
     id: String,
