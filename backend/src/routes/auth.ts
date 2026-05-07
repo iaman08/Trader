@@ -12,6 +12,7 @@ const signupSchema = z.object({
     password: z.string().min(6)
 });
 
+
 router.post("/signup", async(req: Request, res: Response)=>{
     try{
         const parsed = signupSchema.safeParse(req.body);
@@ -23,6 +24,10 @@ router.post("/signup", async(req: Request, res: Response)=>{
         }
 
         const { email, password } = parsed.data;
+
+
+      
+
 
         const user = await prisma.user.create({
             data:{
@@ -42,9 +47,10 @@ router.post("/signup", async(req: Request, res: Response)=>{
             message: "User has been created",
              userId: user.id
         })
-    }catch(error){
-        if(error == "P2002"){
-          return  res.status(411).json({
+    }catch(error: any){
+        if(error instanceof Prisma.PrismaClientKnownRequestError)
+        if(error.code == "P2002"){
+          return  res.status(400).json({
                 error: "Email already exists"
             })
         }
@@ -53,5 +59,55 @@ router.post("/signup", async(req: Request, res: Response)=>{
         })
     }
 })
+
+
+
+
+//SIGNIN
+const signinSchema = z.object({
+    email: z.string().email(),
+    password: z.string().min(6)
+})
+
+router.post("/signin",async (req: Request, res: Response) =>{
+    
+    try{
+        const parsed = signinSchema.safeParse(req.body);
+
+        if(!parsed.success){
+            return res.status(400).json({
+                error: parsed.error.issues 
+            })
+        }
+
+        const { email, password } = parsed.data;
+        
+        const user = await prisma.user.findUnique({
+            where:{email}
+         })
+        if(!user){
+            return res.status(401).json({
+                error:"Invalid email or password"
+            })
+        }
+
+        if(user.password !== password){
+            return res.status(401).json({
+                error: "Invalid email or password"
+            })
+        }
+
+        return res.json({
+            message: "Signin successful",
+            userId: user.id
+        });
+
+    }catch(error){
+        return res.status(500).json({
+            error: "Something went wrong"
+        });
+    }
+});
+
 
 export default router;
