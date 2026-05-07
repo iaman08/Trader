@@ -2,7 +2,7 @@ import { Router, Request, Response} from "express";
 import { prisma } from "../db";
 import { USERS, BALANCES } from "../state";
 import { User } from "../types";
-import { randomUUID } from "crypto"; 
+
 import { z } from "zod";
 
 const router = Router();
@@ -25,10 +25,6 @@ router.post("/signup", async(req: Request, res: Response)=>{
 
         const { email, password } = parsed.data;
 
-
-      
-
-
         const user = await prisma.user.create({
             data:{
                 email,
@@ -42,6 +38,10 @@ router.post("/signup", async(req: Request, res: Response)=>{
                 }
             }
         });
+
+        BALANCES[user.id] = {
+            INR: { available: 1000 , locked: 0 }
+        }
 
         res.status(200).json({
             message: "User has been created",

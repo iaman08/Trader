@@ -3,7 +3,7 @@ import { BALANCES } from "../state";
 
 const router = Router();
 
-router.get("/balance/:userId", (req: Request, res: Response) => {
+router.get("/balance/:userId",async (req: Request, res: Response) => {
     const { userId } = req.params.userId as any;
 
     const userBalance = BALANCES[userId];

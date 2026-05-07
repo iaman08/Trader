@@ -17,7 +17,7 @@ export const ORDERBOOK: Record<string,{
     bids: Record<number, Order[]>;
     asks: Record<number, Order[]>;
 }> = {
-    AXIS: { bids: {}, asks:{}},
-    HDFC: { bids: {}, asks:{}},
-    TATA: { bids: {}, asks:{}},
+    ETH: { bids: {}, asks:{}},
+    BTC: { bids: {}, asks:{}},
+    AXB: { bids: {}, asks:{}},
 };
