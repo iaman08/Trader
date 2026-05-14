@@ -1,38 +1,38 @@
 export type Side = "BUY" | "SELL";
 
 export interface User {
-    id: String,
-    username: String,
-    password: String
+    id: string,
+    username: string,
+    password: string
 }
 
 export interface Order{
-    id: String,
-    userId: String,
-    symbol: String,
+    id: string,
+    userId: string,
+    symbol: string,
     side: Side,
-    price: Number,
-    qty: Number,
-    filledQty: Number,
+    price: number,
+    qty: number,
+    filledQty: number,
     status: "OPEN"| "FILLED" |"CANCELLED"
     createdAt: number;
 
 }
 
 export interface Stock {
-    id: Number,
-    title: String,
-    symbol: String
+    id: number,
+    title: string,
+    symbol: string
 }
 
 export interface Fill {
-    id: String,
-    stockId: Number,
-    price: Number,
-    qty: Number,
-    buyOrderId: String,
-    sellOrderId: String,
-    timestamp: Number
+    id: string,
+    stockId: number,
+    price: number,
+    qty: number,
+    buyOrderId: string,
+    sellOrderId: string,
+    timestamp: number
 }
 
 export interface BalanceEntry{

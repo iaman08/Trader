@@ -1,17 +1,12 @@
 import { Router, Request, Response} from "express";
-import { prisma } from "../db";
+import { Prisma } from "../db";
 import { USERS, BALANCES } from "../state";
-import { User } from "../types";
+import { signupSchema, signinSchema } from "../schemas/auth"
 
+import { User } from "../types";
 import { z } from "zod";
 
 const router = Router();
-
-const signupSchema = z.object({
-    email: z.string().email(),
-    password: z.string().min(6)
-});
-
 
 router.post("/signup", async(req: Request, res: Response)=>{
     try{
@@ -25,7 +20,7 @@ router.post("/signup", async(req: Request, res: Response)=>{
 
         const { email, password } = parsed.data;
 
-        const user = await prisma.user.create({
+        const user = await Prisma.user.create({
             data:{
                 email,
                 password,
@@ -64,11 +59,6 @@ router.post("/signup", async(req: Request, res: Response)=>{
 
 
 //SIGNIN
-const signinSchema = z.object({
-    email: z.string().email(),
-    password: z.string().min(6)
-})
-
 router.post("/signin",async (req: Request, res: Response) =>{
     
     try{
@@ -82,7 +72,7 @@ router.post("/signin",async (req: Request, res: Response) =>{
 
         const { email, password } = parsed.data;
         
-        const user = await prisma.user.findUnique({
+        const user = await Prisma.user.findUnique({
             where:{email}
          })
         if(!user){
